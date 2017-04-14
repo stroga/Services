@@ -1,0 +1,17 @@
+{
+  "short_name": "Services for you",
+  "name": "Services for you",
+  "icons": [
+    {
+      "src": "./assets/img/service_1.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "./assets/img/service_2.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    }
+  ],
+  "start_url": "index.html"
+}
