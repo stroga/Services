@@ -80,6 +80,7 @@ class HeaderComponent extends Component {
   }
 
   onMenuClick (event) {
+    event.preventDefault();
     this.setState({
       isOpen: !this.state.isOpen
     });

@@ -1,6 +1,8 @@
 import React from 'react';
 import { List, ListItem } from 'material-ui/List';
-// import ActionGrade from 'material-ui/svg-icons/action/grade';
+import ActionBuild from 'material-ui/svg-icons/action/build';
+import ActionLabel from 'material-ui/svg-icons/action/label';
+import ActionHome from 'material-ui/svg-icons/action/home';
 // import ContentInbox from 'material-ui/svg-icons/content/inbox';
 // import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 // import ContentSend from 'material-ui/svg-icons/content/send';
@@ -9,14 +11,13 @@ import ActionFace from 'material-ui/svg-icons/action/face';
 
 const iconList = {
   beauty: () => (<ActionFace />),
-  repair: () => (<ActionFace />),
-  building: () => (<ActionFace />),
-  hair: () => (<ActionFace />),
-  nails: () => (<ActionFace />),
-  plumber: () => (<ActionFace />),
-  electrician: () => (<ActionFace />),
+  repair: () => (<ActionBuild />),
+  building: () => (<ActionHome />),
+  hair: () => (<ActionLabel />),
+  nails: () => (<ActionLabel />),
+  plumber: () => (<ActionLabel />),
+  electrician: () => (<ActionLabel />),
 };
-
 
 const listItem = (titleText, id, name) => {
   return (
@@ -30,6 +31,36 @@ const listItem = (titleText, id, name) => {
   );
 };
 
+const iterator = (data) => {
+  return (
+    <ListItem
+      key={data.id}
+      primaryText={data.title}
+      leftIcon={iconList[data.name]()}
+      initiallyOpen={false}
+      primaryTogglesNestedList={false}
+      nestedItems={!!data.sub ? data.sub.map((el) => {
+        return commonCheck(el);
+      }) : [] }
+    />
+  );
+};
+
+function commonCheck (item) {
+  const title = Object.keys(item)[0];
+  if (item[title].sub.length) {
+    return iterator({
+      title,
+      name: item[title].name,
+      id: item[title].id,
+      sub: item[title].sub,
+      listItem: item[title],
+    });
+  } else {
+    return listItem(title, item[title].id, item[title].name);
+  }
+}
+
 /*
  * data = {
  *   name: string,
@@ -41,56 +72,14 @@ const listItem = (titleText, id, name) => {
  *
  * */
 
-/*
-* [listItem(title, item[title].id, item[title].name)]
-* */
-
-const iterator = (data) => {
-  let iterable = data.sub || [{
-      title: data.title,
-      name: data.listItem.name,
-      id: data.listItem.id,
-      sub: data.sub
-    }];
-
-  return iterable.map((item) => {
-    const title = Object.keys(item)[0];
-    return (
-      <ListItem
-        key={item[title].id}
-        primaryText={title}
-        leftIcon={iconList[item[title]['name']]()}
-        initiallyOpen={false}
-        primaryTogglesNestedList={false}
-        nestedItems={!!item[title].sub ? iterator({
-          title,
-          name: item[title].name,
-          id: item[title].id,
-          sub: item[title].sub,
-          listItem: item[title]
-        }) : [listItem(data.title, data.id, data.name)]}
-      />
-    );
-  });
-};
-
-
-
 const treeBuilder = (list, style) => {
   return (
     <div className="menuRoot">
       <List style={style}>
         {list &&
-          list.map((item) => {
-            const title = Object.keys(item)[0];
-            return iterator({
-              title,
-              name: item[title].name,
-              id: item[title].id,
-              sub: item[title].sub,
-              listItem: item[title]
-            });
-          })
+        list.map((item) => {
+          return commonCheck(item);
+        })
         }
       </List>
     </div>
