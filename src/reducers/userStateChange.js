@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT} from '../constants';
+import {LOGIN, LOGOUT, CHANGE_USER_INFO} from '../constants';
 import { user } from '../store';
 
 export default function updateUser(state = user, action) {
@@ -8,7 +8,7 @@ export default function updateUser(state = user, action) {
   else if(action.type === LOGOUT) {
     return { number: state.number - action.amount }
   }
-  else if(action.type === 'CHANGE_USER_INFO') {
+  else if(action.type === CHANGE_USER_INFO) {
     if ( !action.obj ) {
       return {};
     }

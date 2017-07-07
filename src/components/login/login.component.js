@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import cookie from 'react-cookie';
@@ -12,15 +12,7 @@ import {LOGINURL} from '../../constants';
 import './login.css';
 
 class LoginComponent extends Component {
-  static propTypes = {
-    commonState: PropTypes.shape({
-      languageView: PropTypes.object,
-      services: PropTypes.array,
-      user: PropTypes.object
-    })
-  };
-
-  checkBeforePass () {
+  checkBeforePass() {
     // console.log(this.props.commonState);
     if (!!this.props.commonState.user.email) {
       this.props.router.replace('/');
@@ -28,21 +20,21 @@ class LoginComponent extends Component {
     return;
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.checkBeforePass();
   }
 
-  onSubmit () {
+  onSubmit() {
     var params = new URLSearchParams();
     params.append('email', this.emailInput.input.value);
     params.append('password', this.passInput.input.value);
 
     axios
       .post(LOGINURL, params)
-      .then( (resp) => {
+      .then((resp) => {
         this.props.updateUser({
           email: resp.data.email,
-          name: resp.data.username,
+          username: resp.data.username,
           photo: resp.data.photo
         });
         cookie.save('session', resp.data.session, {
@@ -51,20 +43,20 @@ class LoginComponent extends Component {
         });
         this.goBack();
       })
-      .catch( (err) => {
+      .catch((err) => {
         console.log(err.message)
       });
   }
 
-  goBack () {
+  goBack() {
     browserHistory.goBack();
   }
 
-  render () {
+  render() {
     return (
       <MuiThemeProvider>
         <div className="login-form">
-          <form action="" onSubmit={this.onSubmit} >
+          <form action="" onSubmit={this.onSubmit}>
             <TextField
               name="email"
               hintText={this.props.commonState.languageView.email}
@@ -89,4 +81,12 @@ class LoginComponent extends Component {
   }
 }
 
-export { LoginComponent };
+LoginComponent.propTypes = {
+  commonState: PropTypes.shape({
+    languageView: PropTypes.object,
+    services: PropTypes.array,
+    user: PropTypes.object
+  })
+};
+
+export {LoginComponent};

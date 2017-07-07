@@ -10,6 +10,7 @@ import * as uploadServices from './actions/uploadServices';
 import App from './components/App';
 import { AUTH, DATALANGURL, LANGURL } from './constants';
 
+
 function HOC (WrappedComponent) {
   return class extends Component {
     static displayName = 'HOC';
@@ -73,15 +74,18 @@ function HOC (WrappedComponent) {
 
     componentWillMount () {
       const self = this;
-      axios
-        .all([this.checkForLogin(), this.languageRequest()])
-        .then(axios.spread(function (userData, langData) {
-          let { services, ...langDataFiltered } = langData.data;
-          self.props.uploadServices(services);
-          self.props.updateUserInfo(userData.data);
-          self.props.changeLanguage(langDataFiltered);
-          self.loadingDone();
-        }));
+      // axios
+      //   .all([this.checkForLogin(), this.languageRequest()])
+      //   .then(axios.spread(function (userData, langData) {
+      //     let { services, ...langDataFiltered } = langData.data;
+      //     self.props.uploadServices(services);
+      //     self.props.updateUserInfo(userData.data);
+      //     self.props.changeLanguage(langDataFiltered);
+      //     self.loadingDone();
+      //   }));
+      this.props.onChangeUserInfo();
+      this.props.onChangeLanguage();
+      this.loadingDone();
     }
 
     render () {
@@ -118,6 +122,14 @@ function mapDispatchToProps (dispatch) {
     uploadServices: (services) => {
       dispatch(uploadServices.uploadServices(services));
     },
+    onChangeUserInfo: (val) => {
+      "use strict";
+      dispatch(updateUser.onChangeUserInfo(val));
+    },
+    onChangeLanguage: (val) => {
+      "use strict";
+      dispatch(changeLang.onChangeLanguage());
+    }
   };
 }
 

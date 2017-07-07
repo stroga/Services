@@ -3,6 +3,9 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const CHANGE_LANG = 'CHANGE_LANG';
 export  const UPLOAD_SERVICES = 'UPLOAD_SERVICES';
+export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
+export const ON_CHANGE_USER_INFO = 'ON_CHANGE_USER_INFO';
+export const ON_CHANGE_LANG = 'ON_CHANGE_LANG';
 /*URLs*/
 export const LANGURL = 'http://localhost:9443/api/lang';
 export const DATALANGURL = 'http://localhost:9443/api/language/';

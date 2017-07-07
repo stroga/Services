@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './header.css';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -12,12 +12,12 @@ import PropTypes from 'prop-types';
 import cookie from 'react-cookie';
 import Popover from 'material-ui/Popover';
 
-import { MenuCategories } from '../menu-categories';
+import {MenuCategories} from '../menu-categories';
 
 const Login = (props) => {
   return (
     <FlatButton
-      {...{ style: props.style }}
+      {...{style: props.style}}
       label={props.commonState.languageView.login || ' '}
       onTouchTap={props.onLoginClick}
     />
@@ -27,8 +27,8 @@ const Login = (props) => {
 Login.muiName = 'FlatButton';
 
 const Logged = (props) => {
-  const iconStyled = Object.assign({}, { iconStyle: props.iconStyle });
-  const { iconStyle, ...rest } = props;
+  const iconStyled = Object.assign({}, {iconStyle: props.iconStyle});
+  const {iconStyle, ...rest} = props;
 
   const logOut = () => {
     cookie.remove('session');
@@ -41,8 +41,8 @@ const Logged = (props) => {
       iconButtonElement={
         <IconButton><MoreVertIcon /></IconButton>
       }
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
       <MenuItem primaryText={rest.commonState.languageView.account}/>
       <MenuItem primaryText={rest.commonState.languageView.logout} onTouchTap={logOut}/>
@@ -54,18 +54,18 @@ const Logged = (props) => {
 Logged.muiName = 'IconMenu';
 
 class HeaderComponent extends Component {
-  static propTypes = {
-    commonState: PropTypes.shape({
-      languageView: PropTypes.object,
-      services: PropTypes.array,
-      user: PropTypes.object,
-    }).isRequired,
-    onLanguageChange: PropTypes.func.isRequired,
-    updateUserInfo: PropTypes.func.isRequired,
-    onLoginClick: PropTypes.func.isRequired,
-  };
+  // static propTypes = {
+  //   commonState: PropTypes.shape({
+  //     languageView: PropTypes.object,
+  //     services: PropTypes.array,
+  //     user: PropTypes.object,
+  //   }).isRequired,
+  //   onLanguageChange: PropTypes.func.isRequired,
+  //   updateUserInfo: PropTypes.func.isRequired,
+  //   onLoginClick: PropTypes.func.isRequired,
+  // };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
@@ -79,14 +79,14 @@ class HeaderComponent extends Component {
     })
   }
 
-  onMenuClick (event) {
+  onMenuClick(event) {
     event.preventDefault();
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
-  menuBurger () {
+  menuBurger() {
 
     return (
       <IconButton>
@@ -102,7 +102,7 @@ class HeaderComponent extends Component {
     });
   }
 
-  render () {
+  render() {
     return (
       <div className="top-bar">
         <div>
@@ -112,7 +112,8 @@ class HeaderComponent extends Component {
         <AppBar
           title={this.props.commonState.languageView.title}
           iconElementLeft={this.menuBurger()}
-          iconElementRight={!!this.props.commonState.user.email ? <Logged {...this.props} /> : <Login {...this.props}/>}
+          iconElementRight={!!this.props.commonState.user.email ? <Logged {...this.props} /> :
+            <Login {...this.props}/>}
         />
         {this.state.isOpen ? <Popover
           open={this.state.isOpen}
@@ -126,4 +127,15 @@ class HeaderComponent extends Component {
   }
 }
 
-export { HeaderComponent };
+HeaderComponent.propTypes = {
+  commonState: PropTypes.shape({
+    languageView: PropTypes.object,
+    services: PropTypes.array,
+    user: PropTypes.object,
+  }).isRequired,
+  onLanguageChange: PropTypes.func.isRequired,
+  updateUserInfo: PropTypes.func.isRequired,
+  onLoginClick: PropTypes.func.isRequired,
+};
+
+export {HeaderComponent};

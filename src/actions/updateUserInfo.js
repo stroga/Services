@@ -4,3 +4,10 @@ export function updateUserInfo(obj) {
     obj
   };
 }
+
+export function onChangeUserInfo(obj) {
+  return {
+    type: 'ON_CHANGE_USER_INFO',
+    obj
+  };
+}
