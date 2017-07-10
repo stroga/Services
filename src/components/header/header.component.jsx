@@ -54,16 +54,6 @@ const Logged = (props) => {
 Logged.muiName = 'IconMenu';
 
 class HeaderComponent extends Component {
-  // static propTypes = {
-  //   commonState: PropTypes.shape({
-  //     languageView: PropTypes.object,
-  //     services: PropTypes.array,
-  //     user: PropTypes.object,
-  //   }).isRequired,
-  //   onLanguageChange: PropTypes.func.isRequired,
-  //   updateUserInfo: PropTypes.func.isRequired,
-  //   onLoginClick: PropTypes.func.isRequired,
-  // };
 
   constructor(props) {
     super(props);

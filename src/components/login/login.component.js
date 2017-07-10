@@ -13,7 +13,6 @@ import './login.css';
 
 class LoginComponent extends Component {
   checkBeforePass() {
-    // console.log(this.props.commonState);
     if (!!this.props.commonState.user.email) {
       this.props.router.replace('/');
     }

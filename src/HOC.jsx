@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import cookie from 'react-cookie';
 
 import * as changeLang from './actions/changeLanguage';
 import * as updateUser from './actions/updateUserInfo';
 import * as uploadServices from './actions/uploadServices';
 import App from './components/App';
-import { AUTH, DATALANGURL, LANGURL } from './constants';
+import { AUTH, LANGURL } from './constants';
 
 
 function HOC (WrappedComponent) {
@@ -37,23 +36,7 @@ function HOC (WrappedComponent) {
 
     onLanguageChange (lang) {
       if (this.props.commonState.languageView.lang === lang) return;
-      this.loadingStart();
-      axios
-        .get(DATALANGURL + lang)
-        .then((res) => {
-          let { services, ...langDataFiltered } = res.data;
-          this.props.changeLanguage(langDataFiltered);
-          this.props.uploadServices(services);
-          cookie.save('language', lang, {
-            path: '/',
-            maxAge: 172800 // 2 days
-          });
-          this.loadingDone();
-        })
-        .catch( (err) => {
-          console.log(err.message);
-          this.loadingDone();
-        } );
+      this.props.startChangeLang(lang);
     }
 
     checkForLogin () {
@@ -73,19 +56,8 @@ function HOC (WrappedComponent) {
     }
 
     componentWillMount () {
-      const self = this;
-      // axios
-      //   .all([this.checkForLogin(), this.languageRequest()])
-      //   .then(axios.spread(function (userData, langData) {
-      //     let { services, ...langDataFiltered } = langData.data;
-      //     self.props.uploadServices(services);
-      //     self.props.updateUserInfo(userData.data);
-      //     self.props.changeLanguage(langDataFiltered);
-      //     self.loadingDone();
-      //   }));
       this.props.onChangeUserInfo();
-      this.props.onChangeLanguage();
-      this.loadingDone();
+      this.props.onGetLanguage();
     }
 
     render () {
@@ -99,7 +71,6 @@ function HOC (WrappedComponent) {
           />
         );
       }
-
       return null;
     }
   };
@@ -113,9 +84,6 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    changeLanguage: (data) => {
-      dispatch(changeLang.changeLanguage(data));
-    },
     updateUserInfo: (val) => {
       dispatch(updateUser.updateUserInfo(val));
     },
@@ -123,12 +91,13 @@ function mapDispatchToProps (dispatch) {
       dispatch(uploadServices.uploadServices(services));
     },
     onChangeUserInfo: (val) => {
-      "use strict";
       dispatch(updateUser.onChangeUserInfo(val));
     },
-    onChangeLanguage: (val) => {
-      "use strict";
-      dispatch(changeLang.onChangeLanguage());
+    onGetLanguage: (val) => {
+      dispatch(changeLang.onGetLanguage());
+    },
+    startChangeLang: (lang) => {
+      dispatch(changeLang.onStartChangeLanguage(lang));
     }
   };
 }
