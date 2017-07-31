@@ -35,6 +35,10 @@ const Logged = (props) => {
     rest.updateUser('');
   };
 
+  const showAccount = () => {
+    rest.onAccountClick();
+  };
+
   return (
     <IconMenu
       {...iconStyled}
@@ -44,7 +48,7 @@ const Logged = (props) => {
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
-      <MenuItem primaryText={rest.commonState.languageView.account}/>
+      <MenuItem primaryText={rest.commonState.languageView.account} onTouchTap={showAccount}/>
       <MenuItem primaryText={rest.commonState.languageView.logout} onTouchTap={logOut}/>
     </IconMenu>
 

@@ -17,7 +17,7 @@ function HOC (WrappedComponent) {
     constructor (props) {
       super(props);
       this.checkForLogin = this.checkForLogin.bind(this);
-      this.languageRequest = this.languageRequest.bind(this);
+      //this.languageRequest = this.languageRequest.bind(this);
       this.loadingStart = this.loadingStart.bind(this);
       this.loadingDone = this.loadingDone.bind(this);
 
@@ -26,12 +26,16 @@ function HOC (WrappedComponent) {
       };
     }
 
-    languageRequest () {
-      return axios.get(LANGURL, { withCredentials: true });
-    }
+    // truelanguageRequest () {
+    //   return axios.get(LANGURL, { withCredentials: true });
+    // }
 
     onLoginClick () {
       browserHistory.push('/login');
+    }
+
+    onAccountClick() {
+      browserHistory.push('/myaccount');
     }
 
     onLanguageChange (lang) {
@@ -68,6 +72,7 @@ function HOC (WrappedComponent) {
             onLanguageChange={this.onLanguageChange.bind(this)}
             onLoginClick={this.onLoginClick.bind(this)}
             updateUser={this.props.updateUserInfo}
+            onAccountClick={this.onAccountClick.bind(this)}
           />
         );
       }
@@ -87,9 +92,9 @@ function mapDispatchToProps (dispatch) {
     updateUserInfo: (val) => {
       dispatch(updateUser.updateUserInfo(val));
     },
-    uploadServices: (services) => {
-      dispatch(uploadServices.uploadServices(services));
-    },
+    // uploadServices: (services) => {
+    //   dispatch(uploadServices.uploadServices(services));
+    // },
     onChangeUserInfo: (val) => {
       dispatch(updateUser.onChangeUserInfo(val));
     },

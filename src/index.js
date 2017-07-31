@@ -8,6 +8,7 @@ import AppHOC from './HOC.jsx'
 import { HomeComponent } from './components/home'
 import { LoginComponent } from './components/login'
 import { getStore } from './store/rootStore'
+import {AccountComponent} from "./components/account/accouont.component";
 
 const storeCombined = getStore();
 
@@ -17,6 +18,7 @@ ReactDOM.render(
       <Route path="/" component={AppHOC}>
         <IndexRoute component={HomeComponent}/>
         <Route path="/login" component={LoginComponent}/>
+        <Route path="/myaccouont" component={AccountComponent}/>
       </Route>
       <Redirect from="*" to="/"/>
     </Router>
